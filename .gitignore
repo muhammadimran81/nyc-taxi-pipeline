@@ -1,0 +1,10 @@
+.env
+data/*
+!data/.gitkeep
+logs/
+__pycache__/
+*.pyc
+.venv/
+dbt/nyc_taxi/target/
+dbt/nyc_taxi/logs/
+.user.yml

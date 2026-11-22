@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: fct_daily_trips
+    description: Daily trip volume, revenue and averages.
+    columns:
+      - name: pickup_date
+        data_tests: [unique, not_null]
+      - name: trips
+        data_tests: [not_null]
+
+  - name: fct_monthly_zone_revenue
+    description: Monthly trips and revenue per pickup zone.
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "trip_month || '-' || pickup_location_id"
+    columns:
+      - name: trip_month
+        data_tests: [not_null]
+      - name: pickup_location_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: source('raw', 'taxi_zones')
+                field: location_id
+              config:
+                severity: warn   # unknown zone ids are reported, not fatal
