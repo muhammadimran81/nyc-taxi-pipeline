@@ -27,9 +27,8 @@ def _month(context) -> str:
 @dag(
     dag_id="nyc_taxi_pipeline",
     schedule="@monthly",
-    start_date=datetime(2024, 1, 1),
-    end_date=datetime(2024, 6, 1),
-    catchup=True,          # backfills Jan-Jun 2024 on first start
+    start_date=datetime(2024, 1, 1),    
+    catchup=False,          # backfills Jan-Jun 2024 on first start
     max_active_runs=1,
     default_args={"retries": 2, "retry_delay": timedelta(minutes=2)},
     params={"month": Param("", type="string", description="Optional YYYY-MM override")},
